@@ -1,0 +1,37 @@
+Default Input Settings for "v4l2_input"
+ 
+ defaultInputSettings: {
+    auto_reset: false,
+    buffering: true,
+    color_range: 0,
+    dv_timing: -1,
+    framerate: -1,
+    input: -1,
+    pixelformat: -1,
+    resolution: -1,
+    standard: -1,
+    timeout_frames: 5
+  }
+
+Scene Item Transform Object for 'v4l2_input' : webcam
+
+ {
+    alignment: 5,
+    boundsAlignment: 0,
+    boundsHeight: 0,
+    boundsType: 'OBS_BOUNDS_NONE',
+    boundsWidth: 0,
+    cropBottom: 0,
+    cropLeft: 0,
+    cropRight: 0,
+    cropTop: 0,
+    height: null,
+    positionX: null,
+    positionY: null,
+    rotation: 0,
+    scaleX: null,
+    scaleY: null,
+    sourceHeight: 720,
+    sourceWidth: 1280,
+    width: null
+  }
