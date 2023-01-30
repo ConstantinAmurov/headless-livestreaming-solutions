@@ -3,6 +3,7 @@ const {
   defaultSceneName,
   defaultWebCamName,
   webCamSourceName,
+  defaultRTMPIpAdress,
 } = require("./constants");
 const connect = async () => {
   try {
@@ -51,7 +52,7 @@ const setStreamServiceSettings = async () => {
     streamServiceSettings: {
       bwtest: false,
       key: "test",
-      server: "rtmp://192.168.100.190/live",
+      server: defaultRTMPIpAdress,
       use_auth: false,
     },
   });
