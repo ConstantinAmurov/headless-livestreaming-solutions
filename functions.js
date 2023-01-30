@@ -7,7 +7,7 @@ const {
 const connect = async () => {
   try {
     const { obsWebSocketVersion, negotiatedRpcVersion } = await obs.connect(
-      "ws://192.168.100.170:4455",
+      "ws://192.168.100.190:4455",
       "123456",
       { rpcVersion: 1 }
     );
@@ -45,8 +45,24 @@ const getWebCamSceneId = async () => {
   }
 };
 
+const setStreamServiceSettings = async () => {
+  await obs.call("SetStreamServiceSettings", {
+    streamServiceType: "rtmp_custom",
+    streamServiceSettings: {
+      bwtest: false,
+      key: "test",
+      server: "rtmp://192.168.100.190/live",
+      use_auth: false,
+    },
+  });
+};
+
+const startStreamService = async () => await obs.call("StartStream");
+
 module.exports = {
   connect,
   getWebCamSceneId,
   createWebCamSource,
+  setStreamServiceSettings,
+  startStreamService,
 };

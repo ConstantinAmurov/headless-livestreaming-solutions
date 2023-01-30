@@ -3,6 +3,8 @@ const {
   connect,
   getWebCamSceneId,
   createWebCamSource,
+  setStreamServiceSettings,
+  startStreamService,
 } = require("./functions");
 const { obs, defaultSceneName } = require("./constants");
 
@@ -60,6 +62,9 @@ obs.on("Identified", async () => {
       },
     })
     .then(() => console.log("Successfuly Changed Item Transform"));
+
+  await setStreamServiceSettings();
+  await startStreamService();
 });
 
 obs.on("SwitchScenes", (data) => {
