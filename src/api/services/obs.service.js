@@ -4,18 +4,24 @@ const {
   defaultWebCamName,
   webCamSourceName,
   defaultRTMPIpAdress,
-} = require("./constants");
-const connect = async () => {
-  try {
-    const { obsWebSocketVersion, negotiatedRpcVersion } = await obs.connect(
-      "ws://192.168.100.190:4455",
-      "123456",
-      { rpcVersion: 1 }
-    );
+} = require("../../constants");
 
-    return `Connected to server ${obsWebSocketVersion} (using RPC ${negotiatedRpcVersion})`;
+const connect = async (data) => {
+  let response;
+
+  try {
+    if (!data) {
+      response = await obs.connect();
+    } else {
+      const { address, password } = data;
+      // !TODO Add address validation in future
+      response = await obs.connect(address, password);
+    }
+
+    const { obsWebSocketVersion } = response;
+    return `Connected to server version: ${obsWebSocketVersion}`;
   } catch (error) {
-    console.error("Failed to connect", error.code, error.message);
+    return `"Failed to connect", ${error.code}, ${error.message}`;
   }
 };
 
