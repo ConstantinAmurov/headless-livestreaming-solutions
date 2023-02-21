@@ -1,10 +1,12 @@
 const {
-  obs,
   defaultSceneName,
   defaultWebCamName,
   webCamSourceName,
   defaultRTMPIpAdress,
 } = require("../../constants");
+
+const OBSWebSocket = require("obs-websocket-js").default;
+const obs = new OBSWebSocket();
 
 const connect = async (data) => {
   let response;
@@ -67,6 +69,7 @@ const setStreamServiceSettings = async () => {
 const startStreamService = async () => await obs.call("StartStream");
 
 module.exports = {
+  obs,
   connect,
   getWebCamSceneId,
   createWebCamSource,
