@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const ffmpegRoutes = require("./ffmpeg.route");
+const vMixRoute = require("./vmix.route");
 
 router.get("/status", (req, res) => {
   res.json({
@@ -12,6 +12,6 @@ router.get("/status", (req, res) => {
   });
 });
 
-router.use("/ffmpeg", ffmpegRoutes);
+router.use("/vmix", vMixRoute);
 
 module.exports = router;

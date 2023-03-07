@@ -1,11 +1,8 @@
 const defaultIpAddress = "localhost";
 const defaultRTMPIpAdress = `rtmp://${defaultIpAddress}/live/test`;
-
+const defaultPort = 27015;
 
 module.exports = {
-  defaultSceneName,
-  defaultWebCamName,
-  webCamSourceName,
   defaultIpAddress,
   defaultPort,
   defaultRTMPIpAdress,
