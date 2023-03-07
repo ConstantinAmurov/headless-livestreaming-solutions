@@ -1,26 +1,54 @@
-const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
-const fluent = require('fluent-ffmpeg');
-fluent.setFfmpegPath(ffmpegPath);
+const fluent = require("fluent-ffmpeg");
+const { defaultRTMPIpAdress } = require("../../constants");
 
+const createFFMPEGProcess = (args) => {
+  let command = fluent().output(" "); // pass "Invalid output" validation
+  command._outputs[0].isFile = false; // disable adding "-y" argument
+  command._outputs[0].target = ""; // bypass "Unable to find a suitable output format for ' '"
 
-console.log(ffmpeg.path, ffmpeg.version);
-
-const executeFfmpeg = args => {
-    let command = fluent().output(' '); // pass "Invalid output" validation
-    command._outputs[0].isFile = false; // disable adding "-y" argument
-    command._outputs[0].target = ""; // bypass "Unable to find a suitable output format for ' '"
-    command._global.get = () => { // append custom arguments
-      return typeof args === "string" ? args.split(' ') : args;
-    };
-    return command;
+  command._global.get = () => {
+    // append custom arguments
+    return typeof args === "string" ? args.split(" ") : args;
   };
+  return command;
+};
 
+class FFMPEG {
+  constructor(rtmpServer) {
+    this.rtmpServerIP = rtmpServer || defaultRTMPIpAdress;
+  }
 
+  #process = undefined;
 
+  setRTMPServerIp(rtmpServer) {
+    this.rtmpServerIP = rtmpServer;
+  }
 
-//   executeFfmpeg(`ffmpeg -re -i ../../example.avi -c copy -f flv rtmp://localhost/live/test`) // rtmp://192.168.0.108/live/test
-//   .on('start', commandLine => console.log('start', commandLine))
-//   .on('codecData', codecData => console.log('codecData', codecData))
-//   .on('error', error => console.log('error', error))
-//   .on('stderr', stderr => console.log('stderr', stderr))
-//   .run();
+  connect(rtmpServerIP) {
+    if (rtmpServerIP) {
+      this.setRTMPServerIp(rtmpServerIP);
+    }
+
+    this.#process = createFFMPEGProcess(
+      `-re -stream_loop -1 -i /home/ubuntu/wait.mp4 -c:a aac -f flv ${this.rtmpServerIP}`
+    );
+
+    this.#process.run();
+  }
+
+  toggleScene(path) {
+    this.#process.kill();
+    this.process = createFFMPEGProcess(
+      `-re -i ${path} -c:a aac -f flv ${this.rtmpServerIP}`
+    );
+    this.#process.run();
+  }
+
+  kill() {
+    this.#process.kill();
+  }
+}
+
+const ffmpeg = new FFMPEG();
+
+module.exports = { ffmpeg };

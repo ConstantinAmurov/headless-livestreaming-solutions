@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const obsRoutes = require("./obs.route");
+const ffmpegRoutes = require("./ffmpeg.route");
 
 router.get("/status", (req, res) => {
   res.json({
@@ -12,6 +12,6 @@ router.get("/status", (req, res) => {
   });
 });
 
-router.use("/obs", obsRoutes);
+router.use("/ffmpeg", ffmpegRoutes);
 
 module.exports = router;
